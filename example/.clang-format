@@ -1,0 +1,4 @@
+Language:      Cpp
+BasedOnStyle:  Google
+AlignConsecutiveMacros: AcrossEmptyLines
+ColumnLimit : 120

@@ -1,0 +1,9 @@
+{
+  "cmake.sourceDirectory": "${workspaceFolder}",
+  "cmake.buildDirectory": "${workspaceFolder}/build-${buildKit}-${buildType}",
+  "cmake.copyCompileCommands": "${workspaceRoot}/compile_commands.json",
+  "editor.formatOnSave": false,
+  "files.associations": {
+    "cstdint": "cpp"
+  },
+}

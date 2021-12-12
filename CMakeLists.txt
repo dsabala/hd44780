@@ -1,4 +1,9 @@
-add_library(hd44780 STATIC)
+cmake_minimum_required(VERSION 3.16)
+
+project(hd44780 C)
+
+add_library(hd44780)
+add_library(dsabala::hd44780 ALIAS hd44780)
 
 target_sources(hd44780
     PRIVATE

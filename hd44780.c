@@ -173,11 +173,11 @@ void hd44780_goto(hd44780_cfg_t const* const cfg, unsigned char row, unsigned ch
 
 void hd44780_clear(hd44780_cfg_t const* const cfg) { hd44780_send_instruction(cfg, REG_CLEAR); }
 
-void hd44780_cursor_cfg(hd44780_cfg_t const* const cfg) {
+void hd44780_cursor_cfg(hd44780_cfg_t const* const cfg, hd44780_cursor_t const cursor_cfg) {
   unsigned char instruction = REG_PWR_AND_CURSOR | REG_DISPLAY_ON;
-  if (cfg->cursor_config == CURSOR_OFF) {
+  if (cursor_cfg == CURSOR_OFF) {
     instruction |= REG_CURSOR_OFF;
-  } else if (cfg->cursor_config == CURSOR_ON) {
+  } else if (cursor_cfg == CURSOR_ON) {
     instruction |= REG_CURSOR_ON;
   } else {
     instruction |= REG_CURSOR_ON | REG_CURSOR_BLINK;
@@ -206,7 +206,7 @@ void hd44780_init(hd44780_cfg_t const* const cfg) {
   hd44780_display_off(cfg);
   hd44780_clear(cfg);
   hd44780_send_instruction(cfg, REG_EM | REG_EM_SHIFT_CURSOR | REG_EM_INCREMENT);
-  hd44780_cursor_cfg(cfg);
+  hd44780_cursor_cfg(cfg, CURSOR_OFF);
 }
 
 void hd44780_display_off(hd44780_cfg_t const* const cfg) {

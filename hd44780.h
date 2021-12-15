@@ -71,7 +71,6 @@ typedef struct {
   cb_read_bus_t cb_read_bus;
   cb_write_bus_t cb_write_bus;
   cb_delay_ms_t cb_delay_ms;
-  hd44780_cursor_t cursor_config;
   hd44780_interface_t interface;
 } hd44780_cfg_t;
 
@@ -129,8 +128,9 @@ void hd44780_clear(hd44780_cfg_t const *const cfg);
  * @brief Configure cursor type
  * @note Cursor setting is one of settings that can be changed after init
  * @param cfg [in] pointer to configuration
+ * @param cursor_cfg [in] cursor configuration
  */
-void hd44780_cursor_cfg(hd44780_cfg_t const *const cfg);
+void hd44780_cursor_cfg(hd44780_cfg_t const *const cfg, hd44780_cursor_t const cursor_cfg);
 
 /**
  * @brief Turns of display

@@ -39,7 +39,7 @@
  * @brief Prepares the bus for reading data from LCD
  * @param cfg [in] pointer to configuration
  */
-static void hd44780_set_bus_in(hd44780_cfg_t const* const cfg) {
+static void hd44780_set_bus_in(hd44780_hdl const* const cfg) {
   cfg->cb_config_gpio(GPIO_DIR_IN);
   cfg->cb_ctrl_pin(HD44780_PIN_RW, PIN_SET);
 }
@@ -48,7 +48,7 @@ static void hd44780_set_bus_in(hd44780_cfg_t const* const cfg) {
  * @brief Prepares the bus for writing data to LCD
  * @param cfg [in] pointer to configuration
  */
-static void hd44780_set_bus_out(hd44780_cfg_t const* const cfg) {
+static void hd44780_set_bus_out(hd44780_hdl const* const cfg) {
   cfg->cb_ctrl_pin(HD44780_PIN_RW, PIN_RESET);
   cfg->cb_config_gpio(GPIO_DIR_OUT);
 }
@@ -57,7 +57,7 @@ static void hd44780_set_bus_out(hd44780_cfg_t const* const cfg) {
  * @brief Waits until busy flag is set
  * @param cfg [in] pointer to configuration
  */
-static void hd44780_wait_till_busy(hd44780_cfg_t const* const cfg) {
+static void hd44780_wait_till_busy(hd44780_hdl const* const cfg) {
   while (hd44780_read_address(cfg) & 0x80) {
     // blocking wait until flag is set
   };
@@ -68,7 +68,7 @@ static void hd44780_wait_till_busy(hd44780_cfg_t const* const cfg) {
  * @param cfg [in] pointer to configuration
  * @return byte read
  */
-static unsigned char hd44780_read_byte(hd44780_cfg_t const* const cfg) {
+static unsigned char hd44780_read_byte(hd44780_hdl const* const cfg) {
   unsigned char data = 0;
 
   hd44780_set_bus_in(cfg);
@@ -85,12 +85,12 @@ static unsigned char hd44780_read_byte(hd44780_cfg_t const* const cfg) {
   return data;
 }
 
-unsigned char hd44780_read_address(hd44780_cfg_t const* const cfg) {
+unsigned char hd44780_read_address(hd44780_hdl const* const cfg) {
   cfg->cb_ctrl_pin(HD44780_PIN_RS, PIN_RESET);
   return hd44780_read_byte(cfg);
 }
 
-unsigned char hd44780_read_data(hd44780_cfg_t const* const cfg) {
+unsigned char hd44780_read_data(hd44780_hdl const* const cfg) {
   cfg->cb_ctrl_pin(HD44780_PIN_RS, PIN_SET);
   return hd44780_read_byte(cfg);
 }
@@ -100,7 +100,7 @@ unsigned char hd44780_read_data(hd44780_cfg_t const* const cfg) {
  * @param cfg [in] pointer to configuration
  * @param byte [in] byte to be send
  */
-static void hd44780_send_byte_raw(hd44780_cfg_t const* const cfg, unsigned char byte) {
+static void hd44780_send_byte_raw(hd44780_hdl const* const cfg, unsigned char byte) {
   hd44780_set_bus_out(cfg);
   cfg->cb_ctrl_pin(HD44780_PIN_E, PIN_SET);
   cfg->cb_write_bus(byte);
@@ -112,7 +112,7 @@ static void hd44780_send_byte_raw(hd44780_cfg_t const* const cfg, unsigned char 
  * @param cfg [in] pointer to configuration
  * @param instruction [in] instruction
  */
-static void hd44780_send_instruction(hd44780_cfg_t const* const cfg, unsigned char instruction) {
+static void hd44780_send_instruction(hd44780_hdl const* const cfg, unsigned char instruction) {
   hd44780_wait_till_busy(cfg);
   if (cfg->interface == INTERFACE_8BIT) {
     cfg->cb_ctrl_pin(HD44780_PIN_RS, PIN_RESET);
@@ -129,7 +129,7 @@ static void hd44780_send_instruction(hd44780_cfg_t const* const cfg, unsigned ch
  * @param cfg [in] pointer to configuration
  * @param instruction [in] data
  */
-static void hd44780_send_data(hd44780_cfg_t const* const cfg, unsigned char data) {
+static void hd44780_send_data(hd44780_hdl const* const cfg, unsigned char data) {
   hd44780_wait_till_busy(cfg);
   if (cfg->interface == INTERFACE_8BIT) {
     cfg->cb_ctrl_pin(HD44780_PIN_RS, PIN_SET);
@@ -141,17 +141,17 @@ static void hd44780_send_data(hd44780_cfg_t const* const cfg, unsigned char data
   }
 }
 
-void hd44780_write_text(hd44780_cfg_t const* const cfg, char const* text) {
+void hd44780_write_text(hd44780_hdl const* const cfg, char const* text) {
   while (*text) {
     hd44780_send_data(cfg, *text++);
   }
 }
 
-void hd44780_set_ddram_addr(hd44780_cfg_t const* const cfg, unsigned char address) {
+void hd44780_set_ddram_addr(hd44780_hdl const* const cfg, unsigned char address) {
   hd44780_send_instruction(cfg, REG_DDRAM_ADDR_SET | address);
 }
 
-void hd44780_goto(hd44780_cfg_t const* const cfg, unsigned char row, unsigned char column) {
+void hd44780_goto(hd44780_hdl const* const cfg, unsigned char row, unsigned char column) {
   unsigned char address = column;
   switch (row) {
     case 1:
@@ -171,9 +171,9 @@ void hd44780_goto(hd44780_cfg_t const* const cfg, unsigned char row, unsigned ch
   hd44780_set_ddram_addr(cfg, address);
 }
 
-void hd44780_clear(hd44780_cfg_t const* const cfg) { hd44780_send_instruction(cfg, REG_CLEAR); }
+void hd44780_clear(hd44780_hdl const* const cfg) { hd44780_send_instruction(cfg, REG_CLEAR); }
 
-void hd44780_cursor_cfg(hd44780_cfg_t const* const cfg, hd44780_cursor_t const cursor_cfg) {
+void hd44780_cursor_cfg(hd44780_hdl const* const cfg, hd44780_cursor_t const cursor_cfg) {
   unsigned char instruction = REG_PWR_AND_CURSOR | REG_DISPLAY_ON;
   if (cursor_cfg == CURSOR_OFF) {
     instruction |= REG_CURSOR_OFF;
@@ -185,7 +185,7 @@ void hd44780_cursor_cfg(hd44780_cfg_t const* const cfg, hd44780_cursor_t const c
   hd44780_send_instruction(cfg, instruction);
 }
 
-void hd44780_init(hd44780_cfg_t const* const cfg) {
+void hd44780_init(hd44780_hdl const* const cfg) {
   cfg->cb_ctrl_pin(HD44780_PIN_RS, PIN_RESET);
 
   hd44780_send_byte_raw(cfg, REG_INTERFACE | REG_8_BIT_BUS);
@@ -209,15 +209,15 @@ void hd44780_init(hd44780_cfg_t const* const cfg) {
   hd44780_cursor_cfg(cfg, CURSOR_OFF);
 }
 
-void hd44780_display_off(hd44780_cfg_t const* const cfg) {
+void hd44780_display_off(hd44780_hdl const* const cfg) {
   hd44780_send_instruction(cfg, REG_PWR_AND_CURSOR | REG_DISPLAY_OFF);
 }
 
-void hd44780_def_char(hd44780_cfg_t const* const cfg, unsigned char const index, unsigned char const* const pattern) {
+void hd44780_def_char(hd44780_hdl const* const cfg, unsigned char const index, unsigned char const* const pattern) {
   hd44780_send_instruction(cfg, REG_CGRAM_ADDR_SET + (index * 8));
   for (unsigned char i = 0; i < 8; i++) {
     hd44780_send_data(cfg, pattern[i]);
   }
 }
 
-void hd44780_disp_char(hd44780_cfg_t const* const cfg, unsigned char const index) { hd44780_send_data(cfg, index); }
+void hd44780_disp_char(hd44780_hdl const* const cfg, unsigned char const index) { hd44780_send_data(cfg, index); }

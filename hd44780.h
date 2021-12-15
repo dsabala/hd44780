@@ -72,35 +72,35 @@ typedef struct {
   cb_write_bus_t cb_write_bus;
   cb_delay_ms_t cb_delay_ms;
   hd44780_interface_t interface;
-} hd44780_cfg_t;
+} hd44780_hdl;
 
 /**
  * @brief Initialise HD44780 LCD
  * @param cfg [in] pointer to configuration
  * @note Delay 15ms after power on have to be done prior to calling this function
  */
-void hd44780_init(hd44780_cfg_t const *const cfg);
+void hd44780_init(hd44780_hdl const *const cfg);
 
 /**
  * @brief Read memory address and busy flag
  * @param cfg [in] pointer to configuration
  * @return byte read (busy flag at most significant bit)
  */
-unsigned char hd44780_read_address(hd44780_cfg_t const *const cfg);
+unsigned char hd44780_read_address(hd44780_hdl const *const cfg);
 
 /**
  * @brief Read memory data
  * @param cfg [in] pointer to configuration
  * @return byte read
  */
-unsigned char hd44780_read_data(hd44780_cfg_t const *const cfg);
+unsigned char hd44780_read_data(hd44780_hdl const *const cfg);
 
 /**
  * @brief Write string to lcd
  * @param cfg [in] pointer to configuration
  * @param text [in] null terminated string
  */
-void hd44780_write_text(hd44780_cfg_t const *const cfg, char const *);
+void hd44780_write_text(hd44780_hdl const *const cfg, char const *);
 
 /**
  * @brief Sets data display ram address
@@ -108,7 +108,7 @@ void hd44780_write_text(hd44780_cfg_t const *const cfg, char const *);
  * @param cfg [in] pointer to configuration
  * @param address [in] address
  */
-void hd44780_set_ddram_addr(hd44780_cfg_t const *const cfg, unsigned char address);
+void hd44780_set_ddram_addr(hd44780_hdl const *const cfg, unsigned char address);
 
 /**
  * @brief Set cursos in desired position
@@ -116,13 +116,13 @@ void hd44780_set_ddram_addr(hd44780_cfg_t const *const cfg, unsigned char addres
  * @param row [in] row number (0 is at the top)
  * @param column [in] column number (0 is the leftmost)
  */
-void hd44780_goto(hd44780_cfg_t const *const cfg, unsigned char row, unsigned char column);
+void hd44780_goto(hd44780_hdl const *const cfg, unsigned char row, unsigned char column);
 
 /**
  * @brief Clears whole display
  * @param cfg [in] pointer to configuration
  */
-void hd44780_clear(hd44780_cfg_t const *const cfg);
+void hd44780_clear(hd44780_hdl const *const cfg);
 
 /**
  * @brief Configure cursor type
@@ -130,14 +130,14 @@ void hd44780_clear(hd44780_cfg_t const *const cfg);
  * @param cfg [in] pointer to configuration
  * @param cursor_cfg [in] cursor configuration
  */
-void hd44780_cursor_cfg(hd44780_cfg_t const *const cfg, hd44780_cursor_t const cursor_cfg);
+void hd44780_cursor_cfg(hd44780_hdl const *const cfg, hd44780_cursor_t const cursor_cfg);
 
 /**
  * @brief Turns of display
  * @note To turn the display on again use init function
  * @param cfg [in] pointer to configuration
  */
-void hd44780_display_off(hd44780_cfg_t const *const cfg);
+void hd44780_display_off(hd44780_hdl const *const cfg);
 
 /**
  * @brief Defines custom character
@@ -145,14 +145,14 @@ void hd44780_display_off(hd44780_cfg_t const *const cfg);
  * @param index [in] index of character in memory (starts with 0)
  * @param pattern [in] address to 8byte lenght character patern array
  */
-void hd44780_def_char(hd44780_cfg_t const *const cfg, unsigned char const index, unsigned char const *const pattern);
+void hd44780_def_char(hd44780_hdl const *const cfg, unsigned char const index, unsigned char const *const pattern);
 
 /**
  * @brief Shows previously defined custom character
  * @param cfg [in] pointer to configuration
  * @param index [in] index of character in memory (starts with 0)
  */
-void hd44780_disp_char(hd44780_cfg_t const *const cfg, unsigned char const index);
+void hd44780_disp_char(hd44780_hdl const *const cfg, unsigned char const index);
 
 #ifdef __cplusplus
 }

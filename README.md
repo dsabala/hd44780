@@ -33,8 +33,8 @@ Library was tested only on one 4x20 LCD and part of the HD44780 functions were n
 Implement callback functions hiding all platform dependecies like HAL drivers. Example for STM32F407 Discovery board (see also example folder).
 
 ```c
-hd44780_cfg_t * hd44780_get_handle(void) {
-  static hd44780_cfg_t config =
+hd44780_hdl * hd44780_get_handle(void) {
+  static hd44780_hdl config =
   {.cb_config_gpio = hd44780_cb_config_gpio,
    .cb_delay_ms = hd44780_cb_delay_ms,
    .cb_ctrl_pin = hd44780_cb_ctrl_pin,
@@ -153,7 +153,7 @@ Call functions passing pointer to configuration
   /* Remember to wait 15ms after power up */
   HAL_Delay(15);
 
-  hd44780_cfg_t * hd44780_cfg = hd44780_get_handle();
+  hd44780_hdl * hd44780_cfg = hd44780_get_handle();
 
   hd44780_init(hd44780_cfg);
 

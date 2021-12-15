@@ -21,3 +21,8 @@ Usage example is available at https://github.com/dsabala/hd44780-example
 Short:
 - implement all the callback functions being members of handler structure
 - pass handler to public API
+
+
+## Todo
+- various LCD size (now it is fixed to 4x20)
+- shifting text

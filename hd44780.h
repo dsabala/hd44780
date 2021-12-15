@@ -10,27 +10,27 @@ extern "C" {
 /**
  * @brief Type of interface
  */
-typedef enum { INTERFACE_4BIT, INTERFACE_8BIT } hd44780_interface_t;
+typedef enum { INTERFACE_4BIT, INTERFACE_8BIT } hd44780_interface;
 
 /**
  * @brief Setting of cursor
  */
-typedef enum { CURSOR_OFF, CURSOR_ON, CURSOR_BLINK } hd44780_cursor_t;
+typedef enum { CURSOR_OFF, CURSOR_ON, CURSOR_BLINK } hd44780_cursor;
 
 /**
  * @brief Control pins (E, RS, RW)
  */
-typedef enum { HD44780_PIN_RS, HD44780_PIN_RW, HD44780_PIN_E } hd44780_ctrl_pin_t;
+typedef enum { HD44780_PIN_RS, HD44780_PIN_RW, HD44780_PIN_E } hd44780_ctrl_pin;
 
 /**
  * @brief Control pins (E, RS, RW) possible state
  */
-typedef enum { PIN_RESET, PIN_SET } hd44780_pin_state_t;
+typedef enum { PIN_RESET, PIN_SET } hd44780_pin_state;
 
 /**
  * @brief Data bus GPIO pin direction
  */
-typedef enum { GPIO_DIR_IN, GPIO_DIR_OUT } hd44780_gpio_dir_t;
+typedef enum { GPIO_DIR_IN, GPIO_DIR_OUT } hd44780_gpio_dir;
 
 /**
  * @brief Callback function setting GPIO pin direction
@@ -38,40 +38,40 @@ typedef enum { GPIO_DIR_IN, GPIO_DIR_OUT } hd44780_gpio_dir_t;
  * or D4...D7 (4bit transfer) as well as E, RW, RS and those 3 control
  * pins should be allways set as output regardless function argument
  */
-typedef void (*cb_config_gpio_t)(hd44780_gpio_dir_t);
+typedef void (*cb_config_gpio)(hd44780_gpio_dir);
 
 /**
  * @brief Callback function providing miliseconds long waiting during init
  */
-typedef void (*cb_delay_ms_t)(unsigned char);
+typedef void (*cb_delay_ms)(unsigned char);
 
 /**
  * @brief Callback function setting control pins (E, RS, RW) to given state
  */
-typedef void (*cb_ctrl_pin_t)(hd44780_ctrl_pin_t, hd44780_pin_state_t);
+typedef void (*cb_ctrl_pin)(hd44780_ctrl_pin, hd44780_pin_state);
 
 /**
  * @brief Callback function reading data bus
  */
-typedef unsigned char (*cb_read_bus_t)(void);
+typedef unsigned char (*cb_read_bus)(void);
 
 /**
  * @brief Callback function writing data byte on bus
  * @note When using 4bit transfer ignore the 4 least significant bits
  */
-typedef void (*cb_write_bus_t)(unsigned char);
+typedef void (*cb_write_bus)(unsigned char);
 
 /**
  * @brief Config struct
  * @note Five callback function pointers have to be set
  */
 typedef struct {
-  cb_config_gpio_t cb_config_gpio;
-  cb_ctrl_pin_t cb_ctrl_pin;
-  cb_read_bus_t cb_read_bus;
-  cb_write_bus_t cb_write_bus;
-  cb_delay_ms_t cb_delay_ms;
-  hd44780_interface_t interface;
+  cb_config_gpio cb_config_gpio;
+  cb_ctrl_pin cb_ctrl_pin;
+  cb_read_bus cb_read_bus;
+  cb_write_bus cb_write_bus;
+  cb_delay_ms cb_delay_ms;
+  hd44780_interface interface;
 } hd44780_hdl;
 
 /**
@@ -130,7 +130,7 @@ void hd44780_clear(hd44780_hdl const *const cfg);
  * @param cfg [in] pointer to configuration
  * @param cursor_cfg [in] cursor configuration
  */
-void hd44780_cursor_cfg(hd44780_hdl const *const cfg, hd44780_cursor_t const cursor_cfg);
+void hd44780_cursor_cfg(hd44780_hdl const *const cfg, hd44780_cursor const cursor_cfg);
 
 /**
  * @brief Turns of display

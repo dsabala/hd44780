@@ -173,7 +173,7 @@ void hd44780_set_pos(hd44780_hdl const* const cfg, unsigned char row, unsigned c
 
 void hd44780_clear(hd44780_hdl const* const cfg) { hd44780_send_instruction(cfg, REG_CLEAR); }
 
-void hd44780_cursor_cfg(hd44780_hdl const* const cfg, hd44780_cursor_t const cursor_cfg) {
+void hd44780_cursor_cfg(hd44780_hdl const* const cfg, hd44780_cursor const cursor_cfg) {
   unsigned char instruction = REG_PWR_AND_CURSOR | REG_DISPLAY_ON;
   if (cursor_cfg == CURSOR_OFF) {
     instruction |= REG_CURSOR_OFF;

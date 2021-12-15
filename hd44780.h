@@ -116,7 +116,7 @@ void hd44780_set_ddram_addr(hd44780_hdl const *const cfg, unsigned char address)
  * @param row [in] row number (0 is at the top)
  * @param column [in] column number (0 is the leftmost)
  */
-void hd44780_goto(hd44780_hdl const *const cfg, unsigned char row, unsigned char column);
+void hd44780_set_pos(hd44780_hdl const *const cfg, unsigned char row, unsigned char column);
 
 /**
  * @brief Clears whole display

@@ -162,16 +162,16 @@ Call functions passing pointer to configuration
   hd44780_def_char(hd44780_cfg, alarm_icon_index, alarm_icon);
 
   hd44780_clear(hd44780_cfg);
-  hd44780_goto(hd44780_cfg, 0, 0);
+  hd44780_set_pos(hd44780_cfg, 0, 0);
   hd44780_write_text(hd44780_cfg, "github.com/dsabala");
 
-  hd44780_goto(hd44780_cfg, 1, 0);
+  hd44780_set_pos(hd44780_cfg, 1, 0);
   hd44780_write_text(hd44780_cfg, "dependency free,");
 
-  hd44780_goto(hd44780_cfg, 2, 0);
+  hd44780_set_pos(hd44780_cfg, 2, 0);
   hd44780_write_text(hd44780_cfg, "multi-instantaneous,");
 
-  hd44780_goto(hd44780_cfg, 3, 0);
+  hd44780_set_pos(hd44780_cfg, 3, 0);
   hd44780_write_text(hd44780_cfg, "HD44780 LCD driver");
 
   hd44780_disp_char(hd44780_cfg, alarm_icon_index);

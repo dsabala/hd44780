@@ -151,7 +151,7 @@ void hd44780_set_ddram_addr(hd44780_hdl const* const cfg, unsigned char address)
   hd44780_send_instruction(cfg, REG_DDRAM_ADDR_SET | address);
 }
 
-void hd44780_goto(hd44780_hdl const* const cfg, unsigned char row, unsigned char column) {
+void hd44780_set_pos(hd44780_hdl const* const cfg, unsigned char row, unsigned char column) {
   unsigned char address = column;
   switch (row) {
     case 1:

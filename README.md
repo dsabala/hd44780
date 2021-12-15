@@ -14,3 +14,10 @@ Yet another HD44780 C driver. It might fit your needs if you are interested in o
 - **one source file and one header file**
 - **CMake support**
 - **MIT license**
+
+## Example
+Usage example is available at https://github.com/dsabala/hd44780-example
+
+Short:
+- implement all the callback functions being members of handler structure
+- pass handler to public API

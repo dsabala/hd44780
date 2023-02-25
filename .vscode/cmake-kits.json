@@ -1,0 +1,6 @@
+[
+    {
+      "name": "gcc-arm",
+      "toolchainFile": "cmake/toolchains/gcc-arm.cmake"
+    }
+]
